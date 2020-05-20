@@ -1,0 +1,55 @@
+version: '3'
+networks:
+  laravel:
+    driver: bridge
+
+services:
+
+    nginx:
+        build: ./.docker/nginx/
+        restart: always
+        volumes:
+            - ./:/var/www/
+        ports:
+            - 8000:80
+        networks:
+            - laravel
+        links:
+            - laravel
+        depends_on:
+            - laravel
+
+    laravel:
+        build: .
+        restart: always
+        volumes:
+            - ./:/var/www/
+        networks:
+            - laravel
+        links:
+            - redis
+            - db
+        depends_on:
+            - redis
+            - db
+
+    db:
+        image: mysql:5.7
+        command: --innodb-use-native-aio=0
+        networks:
+            - laravel
+        ports:
+            - 3306:3306
+        volumes: 
+            - ./.docker/db/:/var/lib/mysql
+        environment: 
+            - MYSQL_DATABASE=laravel
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_USER=root
+            
+    redis:
+        image: redis:latest
+        expose:
+            - 6379
+        networks:
+            - laravel
