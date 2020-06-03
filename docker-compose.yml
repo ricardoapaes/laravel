@@ -10,6 +10,10 @@ services:
         restart: always
         volumes:
             - ./:/var/www/
+        environment: 
+            - PHP_HOST=laravel
+            - PHP_PORT=9000
+            - PHP_INDEX=index.php
         ports:
             - 8000:80
         networks:
