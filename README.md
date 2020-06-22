@@ -14,3 +14,8 @@ Uma compilação do laravel com Docker e docker-compose.
 Para rodar a aplicação em modo dev executar:
 
 docker-compose up -d
+
+## Desafio Docker - Parte Go
+
+https://github.com/ricardoapaes/codeeducation
+https://hub.docker.com/repository/docker/ricardopaes/codeeducation
